@@ -1,7 +1,8 @@
 # MAIS 202 - FINAL PROJECT: Breast Cancer Detection
 **Description**
 1. Dataset used: https://www.kaggle.com/uciml/breast-cancer-wisconsin-data <br />
-   Why? 1. letsfcancer
+   Why? <br /> 
+        1. letsfcancer
         2. Recommended dataset to use (447 scholarly articles cite this dataset)
         
 2. Methodology <br />
