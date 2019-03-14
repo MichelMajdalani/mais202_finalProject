@@ -157,6 +157,31 @@ swarmPlot(20,31)
 # In[18]:
 
 
+X = (x.values)
+
+X_average_row = np.average(X, axis=0)
+X_bar = X - X_average_row
+sigma = X_bar.T.dot(X_bar)
+
+eigenvalues, _ = np.linalg.eig(sigma)
+
+plt.plot(np.arange(len(eigenvalues)), eigenvalues)
+plt.show()
+
+
+# In[19]:
+
+
+plt.plot(np.arange(7), eigenvalues[:7])
+axes = plt.gca()
+axes.set_xlim([0, 7])
+axes.set_ylim([0,10e5])
+plt.show()
+
+
+# In[20]:
+
+
 #Drop "bad features" and test others using correlation heat map
 possible_features = x.drop(['texture_mean', 'smoothness_mean', 'symmetry_mean', 'fractal_dimension_mean', 'texture_se', 'smoothness_se', 'symmetry_se', 'fractal_dimension_se', 'texture_worst', 'smoothness_worst', 'symmetry_worst', 'fractal_dimension_worst'], axis = 1)
 possible_features_1 = possible_features.iloc[:,:6]
@@ -168,7 +193,7 @@ print(possible_features_2.columns)
 print(possible_features_3.columns)
 
 
-# In[19]:
+# In[21]:
 
 
 f,ax = plt.subplots(figsize=(8, 8))
@@ -181,7 +206,7 @@ f,ax = plt.subplots(figsize=(8, 8))
 sns.heatmap(possible_features_3.corr(), annot=True, linewidths=.5, fmt= '.1f',ax=ax)
 
 
-# In[20]:
+# In[22]:
 
 
 drop_list_RandF = ['area_mean', 'radius_mean', 'compactness_mean', 'area_se', 'radius_se', 'compactness_se', 'area_worst', 'radius_worst', 'compactness_worst' ]
@@ -189,7 +214,7 @@ x_1 = x.drop(drop_list_RandF, axis = 1)
 x_1.head()
 
 
-# In[21]:
+# In[23]:
 
 
 #Heat map to check correlation values
@@ -197,78 +222,43 @@ f,ax = plt.subplots(figsize=(10, 10))
 sns.heatmap(x_1.corr(), annot=True, linewidths=.5, fmt= '.1f',ax=ax)
 
 
-# In[22]:
+# In[31]:
 
 
 #Random Forest model
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import f1_score,confusion_matrix
 from sklearn.metrics import accuracy_score
 
 # Split 70% train 30% test
-x_train, x_test, y_train, y_test = train_test_split(x_1, y, test_size=0.3, random_state=20)
+x_train, x_test, y_train, y_test = train_test_split(x_1, y, test_size=0.3) #random_state=20
+
+# Create the parameter grid based on the results of random search 
+param_grid = {
+    'bootstrap': [True],
+    'max_depth': [5, 8, 12],
+    'max_features': [1, 2, "auto"],
+    'min_samples_leaf': [1, 2, 3],
+    'min_samples_split': [2, 3],
+    'n_estimators': [8, 10, 12, 14]
+}
+
+#Create the model to tune
+clf_rf = RandomForestClassifier()
+clf_gridsearch = GridSearchCV(estimator = clf_rf, param_grid = param_grid, cv = 3, verbose=1, n_jobs=2)
 
 #Fit the model
-clf_rf = RandomForestClassifier(n_estimators=8, min_samples_split=2, random_state=20)      
-clr_rf = clf_rf.fit(x_train,y_train)
+clr_gridsearch = clf_gridsearch.fit(x_train,y_train)
 
 #Predict
-ac_t = accuracy_score(y_train,clf_rf.predict(x_train))
+ac_t = accuracy_score(y_train,clr_gridsearch.predict(x_train))
 print('Training Accuracy is: ',ac_t)
-ac = accuracy_score(y_test,clf_rf.predict(x_test))
+ac = accuracy_score(y_test,clr_gridsearch.predict(x_test))
 print('Test Accuracy is: ',ac)
-cm = confusion_matrix(y_test,clf_rf.predict(x_test))
+cm = confusion_matrix(y_test,clr_gridsearch.predict(x_test))
 sns.heatmap(cm,annot=True,fmt="d")
-
-
-# In[23]:
-
-
-#Test multiple values of n_estimators
-n_estimators_value = np.arange(30) + 1
-training_value, test_value = [], []
-for i in range(len(n_estimators_value)):
-    clf_rf = RandomForestClassifier(n_estimators=n_estimators_value[i], min_samples_split=2, random_state=20)      
-    clr_rf = clf_rf.fit(x_train,y_train)
-    ac_t = accuracy_score(y_train,clf_rf.predict(x_train))
-    ac = accuracy_score(y_test,clf_rf.predict(x_test))
-    training_value.append(ac_t)
-    test_value.append(ac)    
-
-
-# In[24]:
-
-
-plot1 = plt.plot(n_estimators_value, training_value, '-ob', label = 'train')
-plot2 = plt.plot(n_estimators_value, test_value, '-or', label = 'test')
-plt.ylabel("Accuracy")
-plt.xlabel("Number of trees")
-plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-plt.show()
-
-
-# In[25]:
-
-
-#Test multiple values of min_samples_split
-minsamplesplit = np.arange(9) + 2
-training_value, test_value = [], []
-for i in range(len(minsamplesplit)):
-    clf_rf = RandomForestClassifier(n_estimators=8, min_samples_split=minsamplesplit[i], random_state=20)      
-    clr_rf = clf_rf.fit(x_train,y_train)
-    ac_t = accuracy_score(y_train,clf_rf.predict(x_train))
-    ac = accuracy_score(y_test,clf_rf.predict(x_test))
-    training_value.append(ac_t)
-    test_value.append(ac)   
-    
-plot1 = plt.plot(minsamplesplit, training_value, '-ob', label = 'train')
-plot2 = plt.plot(minsamplesplit, test_value, '-or', label = 'test')
-
-plt.ylabel("Accuracy")
-plt.xlabel("Min split")
-plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-plt.show()
 
 
 # In[ ]:
