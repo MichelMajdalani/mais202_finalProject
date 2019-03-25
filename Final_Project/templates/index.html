@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Breast Cancer Detection</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./static/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="./static/fonts/iconic/css/material-design-iconic-font.min.css">
+	<link rel="stylesheet" type="text/css" href="./static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="./static/css/main.css">
+</head>
+<body>
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form" action="/" method="post">
+				<span class="contact100-form-title">
+					Breast Cancer Detection</br> Malignant or Benign? {{ state.result }}
+				</span>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Area: mean</span>
+					<input class="input100" type="number" name="area_mean" value="{{ state.area_mean }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Area: standard error</span>
+					<input class="input100" type="number" name="area_se" value="{{ state.area_se }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Area: worst</span>
+					<input class="input100" type="number" name="area_worst" value="{{ state.area_worst }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Compactness: mean</span>
+					<input class="input100" type="number" name="compactness_mean" value="{{ state.compactness_mean }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Compactness: strandard error</span>
+					<input class="input100" type="number" name="compactness_se" value="{{ state.compactness_se }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Compactness: worst</span>
+					<input class="input100" type="number" name="compactness_worst" value="{{ state.compactness_worst }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Texture: mean</span>
+					<input class="input100" type="number" name="texture_mean" value="{{ state.texture_mean }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Texture: standard error</span>
+					<input class="input100" type="number" name="texture_se" value="{{ state.texture_se }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Texture: worst</span>
+					<input class="input100" type="number" name="texture_worst" value="{{ state.texture_worst }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Smoothness: mean</span>
+					<input class="input100" type="number" name="smoothness_mean" value="{{ state.smoothness_mean }}">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Symmetry: mean</span>
+					<input class="input100" type="number" name="symmetry_mean" value="{{ state.symmetry_mean }}">
+				</div>
+
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn" type="submit" value="submit">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+	<script src="./static/js/main.js"></script>
+
+</body>
+</html>
