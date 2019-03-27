@@ -12,21 +12,20 @@ pip install -r requirements.txt
  
 ## Train the model 
 
-Run `python -m model.model` from the **root** directory.
+Run `cd model` followed by `python model.py` from the **root** directory.
 
-After training the model, the trained weights and the optimizers are saved in 
+After training the model, the hyperparameters are saved in 
 
 ```bash
 ├── model
-|    ├── results
-|           ├── model.pth
-|           ├── optimizer.pth
+|    model.joblib
 ```
 
 ## Running The Flask App
 
-Run the **app.py** file from the **root** directory
+Run the **app.py** file from the **root** directory.
 
+To go back to the **root** directory, write `cd ..`
 ```
 python app.py
 ```
