@@ -19,6 +19,7 @@
 					Breast Cancer Detection</br> Malignant or Benign? {{ state.result }}
 				</span>
 
+				<!-- <div class="rs1-wrap-input101">Area</div> -->
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
 					<span class="label-input100">Area: mean</span>
 					<input class="input100" type="number" name="area_mean" value="{{ state.area_mean }}">
@@ -34,6 +35,7 @@
 					<input class="input100" type="number" name="area_worst" value="{{ state.area_worst }}">
 				</div>
 
+				<!-- <div class="rs1-wrap-input101">Compactness</div> -->
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
 					<span class="label-input100">Compactness: mean</span>
 					<input class="input100" type="number" name="compactness_mean" value="{{ state.compactness_mean }}">
@@ -49,6 +51,7 @@
 					<input class="input100" type="number" name="compactness_worst" value="{{ state.compactness_worst }}">
 				</div>
 
+				<!-- <div class="rs1-wrap-input101">Texture</div> -->
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
 					<span class="label-input100">Texture: mean</span>
 					<input class="input100" type="number" name="texture_mean" value="{{ state.texture_mean }}">
@@ -64,12 +67,14 @@
 					<input class="input100" type="number" name="texture_worst" value="{{ state.texture_worst }}">
 				</div>
 
-				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+				<!-- <div class="rs1-wrap-input101">Smoothness</div> -->
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input101">
 					<span class="label-input100">Smoothness: mean</span>
 					<input class="input100" type="number" name="smoothness_mean" value="{{ state.smoothness_mean }}">
 				</div>
 
-				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+				<!-- <div>Symmetry</div> -->
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input101">
 					<span class="label-input100">Symmetry: mean</span>
 					<input class="input100" type="number" name="symmetry_mean" value="{{ state.symmetry_mean }}">
 				</div>
@@ -82,6 +87,13 @@
 						</span>
 					</button>
 				</div>
+
+				<div class="container-contact100-form-btn">
+					<div method=post enctype=multipart/form-data>
+					 <p><input type=file name=file>
+							<input type=submit value=Upload>
+				 	</div>
+			</div>
 
 			</form>
 		</div>
